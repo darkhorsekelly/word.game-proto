@@ -1,0 +1,197 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import Tailwind directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles using Tailwind utilities where possible */
+body {
+    font-family: 'Inter', sans-serif;
+    overscroll-behavior: none; /* Prevent pull-to-refresh */
+    @apply bg-amber-100; /* Warm background */
+}
+
+/* Style for the interactive tiles (words and letters) */
+.tile {
+    @apply inline-flex items-center justify-center
+           border-2 border-stone-400 rounded-lg shadow bg-yellow-50 /* Creamy tile */
+           text-stone-800 font-semibold /* Dark text, bolder */
+           cursor-pointer
+           transition-all duration-150 ease-in-out /* Faster transition */
+           select-none /* Prevent text selection */
+           min-w-[3rem] min-h-[3rem] /* Increased size (Tailwind JIT syntax) */
+           px-4 py-2 /* Adjusted padding */
+           text-lg; /* Increased text size */
+}
+.letter-tile {
+     @apply min-w-[2.5rem] min-h-[2.5rem] /* Increased size */
+            px-3 py-1 /* Adjusted padding */
+            text-base /* text-base */
+            mx-0.5; /* Add small margin between letter tiles */
+}
+ .space-tile {
+     @apply inline-block align-middle cursor-pointer rounded-md transition-colors duration-150
+            w-5 h-12 /* Slightly wider space, match word tile height */
+            mx-1 /* Adjusted margin */
+            border-2 border-dashed border-transparent; /* Add placeholder border */
+ }
+.space-tile:hover {
+     @apply border-blue-600 bg-blue-100; /* Use accent color for hover */
+ }
+ .space-tile.selected { /* Added style for selected space */
+     @apply border-blue-500 bg-blue-100;
+ }
+
+/* Hover and Selection Effects for Tiles */
+.tile:hover:not(.selected) {
+     @apply shadow-md /* Increase shadow */
+            translate-y-[-2px] scale-105 /* Add slight lift and scale (Tailwind syntax) */
+            border-stone-500; /* Darken border slightly */
+}
+
+.word-tile.selected {
+    /* Use accent color for selection ring */
+    @apply ring-4 ring-offset-1 ring-blue-600 shadow-lg /* Use accent color */
+           border-blue-600 /* Match border to ring */
+           scale-105; /* Slightly larger scale when selected (Tailwind syntax) */
+}
+
+.letter-tile:hover {
+     /* Use accent color for hover */
+     @apply bg-blue-100 border-blue-600 scale-110; /* Scale letter tile on hover */
+}
+
+/* Interaction points between letters */
+.letter-interaction-point {
+    @apply inline-flex items-center justify-center w-4 h-10 mx-px cursor-pointer rounded
+           hover:bg-blue-200 transition-colors duration-150 text-blue-400 hover:text-blue-600;
+}
+ .letter-interaction-point::before {
+     content: '+'; /* Use pseudo-element for the plus */
+     @apply text-base font-bold opacity-50 transition-opacity duration-150 ease-in-out;
+ }
+ .letter-interaction-point:hover::before {
+     @apply opacity-100;
+ }
+
+
+/* Style for the overlay */
+#screen-overlay {
+    /* Make overlay slightly darker */
+    @apply fixed inset-0 bg-stone-900 bg-opacity-30 z-10
+           transition-opacity duration-300 ease-in-out;
+}
+#screen-overlay.hidden {
+    @apply opacity-0 pointer-events-none;
+}
+
+/* Inverse Star Wars effect for history */
+#word-history {
+     /* Container for history items */
+     @apply mt-6 md:mt-10 text-center space-y-2 md:space-y-3 flex flex-col items-center;
+}
+#word-history > div {
+    @apply transition-all duration-500 ease-out text-stone-600; /* Base history style */
+}
+
+/* Update Button Styles */
+.control-button {
+     @apply inline-flex items-center justify-center px-5 py-2.5 /* Increased padding */
+            border border-transparent text-base font-medium /* Increased text size */
+            rounded-lg shadow-sm text-white transition-colors duration-150
+            focus:outline-none focus:ring-2 focus:ring-offset-2
+            bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 /* Accent color */
+            disabled:bg-gray-400 disabled:opacity-70 disabled:cursor-not-allowed; /* Disabled state */
+}
+
+.secondary-button {
+     @apply inline-flex items-center justify-center px-4 py-2 /* Increased padding */
+            border-2 border-stone-400 text-sm font-medium rounded-lg shadow-sm /* Increased text size */
+            transition-all duration-150 ease-in-out
+            focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500
+            bg-yellow-50 text-stone-800 /* Match tile style */
+            hover:enabled:shadow-md hover:enabled:border-stone-500 hover:enabled:translate-y-[-1px]; /* Hover */
+}
+ /* Specific overrides for cancel button */
+ #cancel-selection-btn {
+     @apply border-red-400 text-red-700 bg-red-50
+            hover:enabled:bg-red-100 hover:enabled:border-red-500;
+ }
+ /* Specific overrides for merge confirmation */
+ #confirm-merge-btn {
+     @apply border-blue-400 text-blue-700 bg-blue-50
+            hover:enabled:bg-blue-100 hover:enabled:border-blue-500;
+ }
+
+/* Word Twist Panel */
+#word-twist-panel {
+    @apply p-4 border-2 border-stone-400 rounded-lg shadow-md mt-2
+           bg-amber-50; /* Slightly lighter panel bg */
+}
+#word-twist-input {
+    @apply w-full p-2 border-2 border-stone-400 rounded-md mb-3 text-base /* Increased text size */
+           focus:ring-1 focus:ring-blue-500 focus:border-blue-500 bg-white; /* White input background */
+}
+ .suggestion-scroller {
+    @apply flex space-x-2 overflow-x-auto pb-2 mt-2 whitespace-nowrap;
+    scrollbar-width: thin;
+    scrollbar-color: theme('colors.stone.400') transparent; /* Match scrollbar to theme */
+}
+.suggestion-scroller::-webkit-scrollbar { height: 6px; }
+.suggestion-scroller::-webkit-scrollbar-track { background: transparent; }
+.suggestion-scroller::-webkit-scrollbar-thumb { @apply bg-stone-400 rounded-[3px]; }
+
+ .suggestion-item {
+     /* Style suggestions like mini-tiles */
+     @apply inline-block px-4 py-1.5 rounded-md border-2 border-stone-400
+            bg-yellow-50 text-stone-800 /* Match tile style */
+            text-sm font-medium cursor-pointer transition-all duration-150 ease-in-out
+            hover:shadow-sm hover:border-stone-500 hover:scale-105 hover:bg-yellow-100; /* Hover */
+ }
+ .tab-button {
+     @apply px-4 py-1.5 text-sm font-medium rounded-lg transition-colors duration-150; /* Rounded-lg */
+ }
+ .tab-button.active {
+     @apply bg-blue-600 text-white; /* Accent color */
+ }
+ .tab-button:not(.active) {
+     @apply text-blue-600 bg-blue-100 hover:bg-blue-200;
+ }
+
+/* Action Log */
+#action-log {
+    @apply h-24 overflow-y-auto border-2 border-stone-400 rounded-lg p-3 text-sm /* Increased text size */
+           shadow-inner bg-amber-50 text-stone-600; /* Panel style */
+     scrollbar-width: thin;
+     scrollbar-color: theme('colors.stone.400') transparent;
+}
+#action-log::-webkit-scrollbar { width: 6px; }
+#action-log::-webkit-scrollbar-track { background: transparent; }
+#action-log::-webkit-scrollbar-thumb { @apply bg-stone-400 rounded-[3px]; }
+
+/* Checkmark Styling */
+.checkmark-icon {
+     @apply absolute -top-1.5 -right-1.5 p-0.5 rounded-full shadow bg-green-600; /* Secondary accent */
+}
+.checkmark-icon i {
+     @apply w-3 h-3 text-white block; /* Ensure icon displays correctly */
+}
+
+/* Header & Footer Distinction */
+header {
+    @apply pb-4 border-b-2 border-stone-400; /* Add bottom border */
+}
+ footer {
+     @apply pt-4 border-t-2 border-stone-400; /* Add top border */
+ }
+
+ /* Larger Target Word */
+ #target-word {
+     @apply text-4xl md:text-5xl font-extrabold tracking-tight text-blue-600; /* Larger, bolder, accent */
+ }
+ #turn-counter {
+     @apply text-sm text-stone-500; /* Slightly larger/darker */
+ }
