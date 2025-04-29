@@ -1,0 +1,197 @@
+/* Import Tailwind directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- NYT Games Theme - Mobile Optimized --- */
+
+/* Base Body Styles */
+body {
+    font-family: 'Inter', sans-serif;
+    overscroll-behavior: none;
+    @apply bg-white text-black text-base md:text-lg; /* Larger base text size */
+}
+
+/* Tile Styles (Word & Letter) - Flexible width, larger padding */
+.tile {
+    @apply inline-flex items-center justify-center
+           border-2 rounded-none /* Square tiles */
+           font-semibold
+           cursor-pointer
+           transition-all duration-100 ease-in-out
+           select-none
+           min-h-[3.5rem] md:min-h-[4rem] /* Taller tiles */
+           px-3 py-2 md:px-4 /* Generous padding */
+           text-xl md:text-2xl; /* Larger text */
+    /* Default Tile Colors - White bg, gray border */
+    @apply bg-white border-gray-300 text-black;
+    /* Allow tiles to grow based on content, but have a minimum */
+    min-width: 3.5rem; /* Minimum width based on height */
+}
+.letter-tile {
+     /* Slightly smaller, but still large touch targets */
+     @apply w-10 h-10 md:w-12 md:h-12
+            text-lg md:text-xl
+            mx-px;
+     /* Inherit most .tile styles but override size */
+}
+
+/* Space Tile - Adjusted for new tile height */
+ .space-tile {
+     @apply inline-block align-middle cursor-pointer transition-colors duration-150
+            w-4 h-[3.5rem] md:h-[4rem] /* Match tile height */
+            mx-1
+            border-y-2 border-transparent
+            relative;
+ }
+.space-tile:hover {
+     @apply border-gray-300;
+ }
+.space-tile.selected {
+     @apply border-yellow-400 bg-yellow-50;
+ }
+
+/* Hover and Selection Effects for Tiles */
+.tile:hover:not(.selected) {
+     @apply bg-gray-50;
+}
+
+.word-tile.selected {
+    /* Selection - Yellow accent */
+    @apply ring-2 ring-offset-1 ring-yellow-400 shadow-sm
+           border-yellow-400;
+    /* Ensure flex wrap for letter tiles */
+    @apply flex flex-wrap justify-center items-center gap-1 p-2; /* Add gap, ensure padding */
+     /* Allow selected tile to grow if needed */
+     min-width: initial;
+}
+
+.letter-tile:hover {
+     @apply bg-gray-100 border-gray-400 scale-105; /* Add scale */
+}
+
+/* Interaction points between letters - Slightly larger */
+.letter-interaction-point {
+    @apply inline-flex items-center justify-center w-2 h-10 md:h-12 cursor-pointer rounded
+           bg-gray-200 hover:bg-yellow-400 transition-colors duration-150 mx-0.5;
+}
+ .letter-interaction-point::before {
+     content: ''; /* Remove '+' */
+ }
+
+
+/* Screen Overlay */
+#screen-overlay {
+    @apply fixed inset-0 bg-black bg-opacity-5 z-10 backdrop-blur-[1px]
+           transition-opacity duration-300 ease-in-out;
+}
+#screen-overlay.hidden {
+    @apply opacity-0 pointer-events-none;
+}
+
+/* Word History - Larger text */
+#word-history {
+     @apply mt-4 mb-6 text-center text-gray-500;
+}
+#word-history > div {
+    /* Larger history text */
+    @apply text-lg md:text-xl transition-opacity duration-300 ease-in-out;
+}
+
+/* Button Styles - Larger touch targets */
+.control-button {
+     @apply inline-flex items-center justify-center px-5 py-2.5 /* Increased padding */
+            border border-gray-300 text-base font-medium /* Larger text */
+            rounded-md shadow-sm transition-colors duration-150
+            focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-black;
+     @apply bg-white text-black hover:enabled:bg-gray-100
+            disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed disabled:border-gray-200;
+}
+#final-check-btn {
+    @apply bg-black text-white border-black hover:enabled:bg-gray-800;
+}
+
+.secondary-button {
+     @apply control-button text-sm md:text-base; /* Slightly smaller text than primary */
+}
+ #cancel-selection-btn {
+     /* Keep consistent */
+ }
+ #confirm-merge-btn {
+     @apply bg-yellow-400 border-yellow-400 text-black hover:enabled:bg-yellow-500;
+ }
+ #cancel-merge-btn {
+     /* Standard secondary/control button style */
+ }
+
+/* Word Twist Panel */
+#word-twist-panel {
+    @apply p-4 border border-gray-200 rounded-lg shadow-md mt-2
+           bg-white;
+}
+#word-twist-input {
+    @apply w-full p-3 border border-gray-300 rounded-md mb-3 text-lg /* Larger text */
+           focus:ring-1 focus:ring-black focus:border-black bg-white;
+    font-family: 'Inter', sans-serif;
+}
+ .suggestion-scroller {
+    @apply flex space-x-2 overflow-x-auto pb-2 mt-2 whitespace-nowrap;
+    scrollbar-width: thin;
+    scrollbar-color: theme('colors.gray.300') transparent;
+}
+.suggestion-scroller::-webkit-scrollbar { height: 5px; }
+.suggestion-scroller::-webkit-scrollbar-track { background: transparent; }
+.suggestion-scroller::-webkit-scrollbar-thumb { @apply bg-gray-300 rounded-[3px]; }
+
+ .suggestion-item {
+     /* Larger suggestion items */
+     @apply inline-block px-4 py-2 rounded-md border border-gray-300
+            bg-white text-black
+            text-base font-medium cursor-pointer transition-colors duration-150 ease-in-out
+            hover:bg-gray-100 hover:border-gray-400;
+ }
+ .tab-button {
+     @apply px-4 py-2 text-base font-medium rounded-md transition-colors duration-150; /* Larger tabs */
+ }
+ .tab-button.active {
+     @apply bg-gray-100 text-black border-b-2 border-black;
+ }
+ .tab-button:not(.active) {
+     @apply text-gray-500 hover:text-black hover:bg-gray-50;
+ }
+
+/* Action Log - Slightly larger text */
+#action-log {
+    @apply h-24 overflow-y-auto border border-gray-200 rounded-md p-2 text-sm /* Larger text */
+           bg-gray-50 text-gray-600;
+     scrollbar-width: thin;
+     scrollbar-color: theme('colors.gray.300') transparent;
+    font-family: 'Inter', sans-serif;
+}
+#action-log::-webkit-scrollbar { width: 5px; }
+#action-log::-webkit-scrollbar-track { background: transparent; }
+#action-log::-webkit-scrollbar-thumb { @apply bg-gray-300 rounded-[3px]; }
+
+/* Checkmark Styling */
+.checkmark-icon {
+     @apply absolute -top-1.5 -right-1.5 p-1 rounded-full shadow bg-yellow-400; /* Slightly larger padding */
+}
+.checkmark-icon i {
+     @apply w-3 h-3 text-black block; /* Larger icon */
+}
+
+/* Header & Footer */
+header {
+    @apply pb-4 border-b border-gray-200;
+}
+ footer {
+     @apply mt-auto pt-4 border-t border-gray-200;
+ }
+
+ /* Target Word - Even larger */
+ #target-word {
+     @apply text-4xl md:text-5xl font-bold tracking-tight text-black mb-1; /* Increased size */
+ }
+ #turn-counter {
+     @apply text-sm text-gray-500 uppercase tracking-wider; /* Increased size */
+ }

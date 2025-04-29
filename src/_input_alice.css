@@ -1,0 +1,222 @@
+/* Import Tailwind directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- Alice in Wonderland Theme --- */
+
+/* Base Body Styles */
+body {
+    font-family: 'Alice', serif; /* Apply Alice font */
+    overscroll-behavior: none;
+    /* Subtle textured background - using a very light stone color */
+    @apply bg-stone-100 text-stone-800;
+}
+
+/* Tile Styles (Word & Letter) */
+.tile {
+    @apply inline-flex items-center justify-center
+           border-2 rounded-md shadow /* Keep rounded, slightly softer shadow */
+           font-semibold /* Keep text bold */
+           cursor-pointer
+           transition-all duration-150 ease-in-out
+           select-none
+           min-w-[3rem] min-h-[3rem]
+           px-4 py-2
+           text-lg;
+    /* Tile Colors - Off-white like parchment */
+    @apply bg-white border-stone-400 text-stone-800;
+}
+.letter-tile {
+     @apply min-w-[2.5rem] min-h-[2.5rem]
+            px-3 py-1
+            text-base
+            mx-0.5;
+}
+
+/* Space Tile - Make it look like a gap or maybe a subtle pattern */
+ .space-tile {
+     @apply inline-block align-middle cursor-pointer rounded-md transition-colors duration-150
+            w-5 h-12 /* Match word tile height */
+            mx-1
+            border-2 border-dashed border-transparent relative; /* Keep dashed border */
+      /* Add a subtle indicator like playing card pips */
+ }
+  .space-tile::before {
+      content: '◇'; /* Diamond suit - subtle indicator */
+      @apply absolute inset-0 flex items-center justify-center text-stone-300 text-lg opacity-50 transition-opacity duration-150;
+  }
+.space-tile:hover::before {
+      @apply opacity-100 text-indigo-400;
+ }
+.space-tile.selected {
+     @apply border-indigo-500 bg-indigo-50; /* Use Indigo for selection */
+ }
+ .space-tile.selected::before {
+      @apply text-indigo-500 opacity-100;
+ }
+
+
+/* Hover and Selection Effects for Tiles */
+.tile:hover:not(.selected) {
+     @apply shadow-md
+            translate-y-[-2px] scale-105
+            border-stone-500; /* Darker border on hover */
+}
+
+.word-tile.selected {
+    /* Selection - Use a deep red like playing cards */
+    @apply ring-4 ring-offset-1 ring-rose-600 shadow-lg
+           border-rose-600 /* Match border to ring */
+           scale-105;
+}
+
+.letter-tile:hover {
+     /* Hover - Use a light blue, perhaps? */
+     @apply bg-sky-50 border-sky-500 scale-110;
+}
+
+/* Interaction points between letters - Maybe a keyhole? */
+.letter-interaction-point {
+    @apply inline-flex items-center justify-center w-4 h-10 mx-px cursor-pointer rounded
+           hover:bg-rose-100 transition-colors duration-150 text-rose-400 hover:text-rose-600;
+}
+ .letter-interaction-point::before {
+     /* Using a simple dot or asterisk as keyhole is hard */
+     content: '+';
+     @apply text-base font-bold opacity-50 transition-opacity duration-150 ease-in-out;
+ }
+ .letter-interaction-point:hover::before {
+     @apply opacity-100;
+ }
+
+
+/* Screen Overlay - Slightly tinted */
+#screen-overlay {
+    @apply fixed inset-0 bg-stone-500 bg-opacity-20 z-10 backdrop-blur-sm
+           transition-opacity duration-300 ease-in-out;
+}
+#screen-overlay.hidden {
+    @apply opacity-0 pointer-events-none;
+}
+
+/* Word History - Fading text */
+#word-history {
+     @apply mt-6 md:mt-10 text-center space-y-2 md:space-y-3 flex flex-col items-center;
+}
+#word-history > div {
+    @apply transition-all duration-500 ease-out text-stone-500; /* Slightly lighter history text */
+}
+
+/* Button Styles - More decorative */
+.control-button {
+     @apply inline-flex items-center justify-center px-5 py-2.5
+            border-2 text-base font-medium /* Use border */
+            rounded-lg shadow-sm transition-all duration-150 ease-in-out
+            focus:outline-none focus:ring-2 focus:ring-offset-2;
+     /* Primary Button - Deep Red */
+     @apply bg-rose-700 border-rose-800 text-white
+            hover:enabled:bg-rose-800 hover:enabled:border-rose-900 hover:enabled:shadow-md hover:enabled:translate-y-[-1px]
+            focus:ring-rose-500
+            disabled:bg-stone-400 disabled:border-stone-500 disabled:opacity-70 disabled:cursor-not-allowed;
+}
+
+.secondary-button {
+     @apply inline-flex items-center justify-center px-4 py-2
+            border-2 text-sm font-medium rounded-lg shadow-sm
+            transition-all duration-150 ease-in-out
+            focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-indigo-500;
+     /* Secondary Button - Deep Blue */
+     @apply bg-indigo-600 border-indigo-700 text-white
+            hover:enabled:bg-indigo-700 hover:enabled:border-indigo-800 hover:enabled:shadow-md hover:enabled:translate-y-[-1px];
+}
+ /* Specific overrides for cancel button (make it less prominent) */
+ #cancel-selection-btn {
+     @apply bg-stone-500 border-stone-600 text-white
+            hover:enabled:bg-stone-600 hover:enabled:border-stone-700;
+ }
+ /* Specific overrides for merge confirmation (use secondary blue) */
+ #confirm-merge-btn {
+     /* Keep the default secondary style */
+ }
+ #cancel-merge-btn {
+      /* Make cancel less prominent than confirm */
+      @apply bg-stone-500 border-stone-600 text-white
+            hover:enabled:bg-stone-600 hover:enabled:border-stone-700;
+ }
+
+/* Word Twist Panel - Ornate feel? */
+#word-twist-panel {
+    @apply p-4 border-2 border-stone-500 rounded-lg shadow-md mt-2
+           bg-stone-50; /* Lighter panel background */
+}
+#word-twist-input {
+    @apply w-full p-2 border-2 border-stone-400 rounded-md mb-3 text-base
+           focus:ring-1 focus:ring-rose-500 focus:border-rose-600 bg-white;
+    font-family: 'Alice', serif; /* Ensure input uses the theme font */
+}
+ .suggestion-scroller {
+    @apply flex space-x-2 overflow-x-auto pb-2 mt-2 whitespace-nowrap;
+    scrollbar-width: thin;
+    scrollbar-color: theme('colors.stone.400') transparent;
+}
+.suggestion-scroller::-webkit-scrollbar { height: 6px; }
+.suggestion-scroller::-webkit-scrollbar-track { background: transparent; }
+.suggestion-scroller::-webkit-scrollbar-thumb { @apply bg-stone-400 rounded-[3px]; }
+
+ .suggestion-item {
+     /* Style suggestions like small cards */
+     @apply inline-block px-4 py-1.5 rounded-md border-2 border-stone-400
+            bg-white text-stone-800
+            text-sm font-medium cursor-pointer transition-all duration-150 ease-in-out
+            hover:shadow-sm hover:border-rose-500 hover:scale-105 hover:bg-rose-50 hover:text-rose-700;
+ }
+ .tab-button {
+     @apply px-4 py-1.5 text-sm font-medium rounded-lg transition-colors duration-150;
+ }
+ .tab-button.active {
+     /* Active Tab - Deep Red */
+     @apply bg-rose-700 text-white;
+ }
+ .tab-button:not(.active) {
+      /* Inactive Tab - Lighter Red */
+     @apply text-rose-700 bg-rose-100 hover:bg-rose-200;
+ }
+
+/* Action Log - Like a scroll */
+#action-log {
+    @apply h-24 overflow-y-auto border-2 border-stone-500 rounded-lg p-3 text-sm
+           shadow-inner bg-stone-50 text-stone-600;
+     scrollbar-width: thin;
+     scrollbar-color: theme('colors.stone.400') transparent;
+    font-family: 'Alice', serif; /* Ensure log uses the theme font */
+}
+#action-log::-webkit-scrollbar { width: 6px; }
+#action-log::-webkit-scrollbar-track { background: transparent; }
+#action-log::-webkit-scrollbar-thumb { @apply bg-stone-400 rounded-[3px]; }
+
+/* Checkmark Styling - Use a fitting green */
+.checkmark-icon {
+     @apply absolute -top-1.5 -right-1.5 p-0.5 rounded-full shadow bg-emerald-600; /* Emerald green */
+}
+.checkmark-icon i {
+     @apply w-3 h-3 text-white block;
+}
+
+/* Header & Footer - Simple borders */
+header {
+    @apply pb-4 border-b-2 border-stone-300; /* Lighter border */
+}
+ footer {
+     @apply pt-4 border-t-2 border-stone-300; /* Lighter border */
+ }
+
+ /* Target Word - Emphasized */
+ #target-word {
+     @apply text-4xl md:text-5xl font-bold tracking-tight text-rose-800; /* Darker Red */
+     /* Add text shadow for depth? */
+     text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+ }
+ #turn-counter {
+     @apply text-sm text-stone-500 mt-1;
+ }

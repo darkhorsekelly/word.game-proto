@@ -3,26 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Word Game Prototype - NYT Theme (Mobile Fixed)</title>
+    <title>Word Game Prototype - Alice Theme</title>
     <link href="./dist/output.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide-dev@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Alice&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    </head>
+<body class="p-4 md:p-8 flex flex-col min-h-screen"> <div id="screen-overlay" class="hidden"></div> <div class="relative flex-grow flex flex-col max-w-4xl mx-auto w-full z-20">
 
-</head>
-<body class="p-4 md:p-6 flex flex-col min-h-screen"> <div id="screen-overlay" class="hidden"></div> <div class="relative flex-grow flex flex-col max-w-2xl mx-auto w-full z-20"> <header class="mb-6 md:mb-8 text-center"> <h1 id="target-word">DRAGON</h1> <p id="turn-counter">Turn <span id="turn-number">1</span></p> </header>
+        <header class="mb-6 md:mb-10 text-center"> <h2 class="text-base uppercase text-stone-500 tracking-wider mb-2 font-semibold flex items-center justify-center">
+                <i class="fas fa-stopwatch text-stone-400 mr-2"></i> Target Word
+            </h2>
+            <p id="target-word">DRAGON</p> <p id="turn-counter">Turn: <span id="turn-number">1</span></p> </header>
 
-        <div id="current-words-container" class="text-center mb-6 min-h-[6rem] flex items-center justify-center flex-wrap gap-2 md:gap-2.5"> </div>
-
-        <div id="word-history">
+        <div id="current-words-container" class="text-center mb-4 min-h-[6rem] flex items-center justify-center flex-wrap gap-2 md:gap-3">
             </div>
 
+        <div id="word-history"> </div>
 
-        <div id="contextual-controls" class="text-center mt-6 min-h-[10rem]"> <div id="letter-twist-counter-container" class="text-base text-gray-500 mb-4 font-medium hidden"> Letter Twists Used: <span id="letter-twist-count">0</span> / 2
+
+        <div id="contextual-controls" class="text-center mt-4 min-h-[10rem]">
+            <div id="letter-twist-counter-container" class="text-base text-stone-600 mb-3 font-medium hidden">
+                Letter Twists Used: <span id="letter-twist-count">0</span> / 2
             </div>
 
-            <div id="word-twist-panel" class="hidden max-w-md mx-auto"> <input type="text" id="word-twist-input" placeholder="Type replacement word..."> <div class="flex space-x-3 mb-4 justify-center"> <button class="tab-button active" data-tab="synonyms">Synonyms</button> <button class="tab-button" data-tab="antonyms">Antonyms</button>
+            <div id="word-twist-panel" class="hidden max-w-md mx-auto"> <input type="text" id="word-twist-input" placeholder="Type replacement word..."> <div class="flex space-x-2 mb-3 justify-center">
+                    <button class="tab-button active" data-tab="synonyms">Synonyms</button> <button class="tab-button" data-tab="antonyms">Antonyms</button>
                 </div>
                 <div id="synonym-suggestions" class="suggestion-scroller"> <span class="suggestion-item">FRUIT</span> <span class="suggestion-item">BERRY</span>
                     <span class="suggestion-item">PLANT</span>
@@ -37,28 +44,43 @@
             </div>
 
             <div id="merge-confirmation" class="hidden text-center mt-4">
-                <p class="text-gray-700 mb-3 text-lg">Merge these two words?</p> <button id="confirm-merge-btn" class="secondary-button mr-2">Yes, Merge</button> <button id="cancel-merge-btn" class="secondary-button">Cancel</button>
+                 <p class="text-stone-700 mb-3 text-base flex items-center justify-center">
+                    <i class="fas fa-link text-indigo-500 mr-2"></i> Merge these two words?
+                </p>
+                <button id="confirm-merge-btn" class="secondary-button mr-2">Yes, Merge</button> <button id="cancel-merge-btn" class="secondary-button">Cancel</button>
             </div>
 
-             <div id="selected-word-buttons" class="hidden space-x-3 mt-4 flex justify-center items-center"> <button id="word-twist-btn" class="secondary-button">
-                    <i data-lucide="replace" class="w-5 h-5 mr-1.5"></i> Twist/Replace </button>
+             <div id="selected-word-buttons" class="hidden space-x-3 mt-4 flex justify-center items-center">
+                <button id="word-twist-btn" class="secondary-button">
+                     <i class="fas fa-random fa-fw mr-1.5"></i> Word Twist/Replace
+                </button>
                  <button id="cancel-selection-btn" class="secondary-button">
-                      <i data-lucide="x" class="w-5 h-5 mr-1.5"></i> Done </button>
+                      <i class="fas fa-times fa-fw mr-1.5"></i> Done with Word
+                 </button>
             </div>
         </div>
 
         <div class="flex-grow"></div>
 
-        <footer class="mt-auto pt-4 pb-4"> <div class="flex flex-col md:flex-row items-center justify-between gap-4"> <div class="flex space-x-3"> <button id="undo-btn" class="control-button" disabled> <i data-lucide="undo-2" class="w-5 h-5 mr-1.5"></i> Undo </button>
+        <footer class="mt-auto pt-6"> <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex space-x-3">
+                    <button id="undo-btn" class="control-button" disabled> <i class="fas fa-undo-alt fa-fw mr-1.5"></i> Undo
+                    </button>
                     <button id="redo-btn" class="control-button" disabled>
-                        <i data-lucide="redo-2" class="w-5 h-5 mr-1.5"></i> Redo </button>
+                         <i class="fas fa-redo-alt fa-fw mr-1.5"></i> Redo
+                    </button>
                 </div>
 
-                <div class="w-full md:w-auto order-first md:order-none">
-                     <p class="text-sm text-gray-500 text-center md:text-left mb-1">Actions:</p> <div id="action-log"> </div>
+                <div class="w-full md:w-1/2">
+                     <p class="text-sm text-stone-600 text-center md:text-left mb-1 font-medium flex items-center">
+                         <i class="fas fa-scroll text-stone-400 mr-2"></i> Actions this turn:
+                     </p>
+                    <div id="action-log"> </div>
                 </div>
 
-                <button id="final-check-btn" class="control-button w-full md:w-auto"> Final Check <i data-lucide="check-circle" class="w-5 h-5 ml-2"></i> </button>
+                <button id="final-check-btn" class="control-button w-full md:w-auto">
+                     Final Check <i class="fas fa-check-circle fa-fw ml-2"></i>
+                </button>
             </div>
         </footer>
 
@@ -66,6 +88,7 @@
 
     <script>
         // The JavaScript logic remains exactly the same as the previous working version.
+        // It relies on the CSS classes being correctly applied by the linked output.css file.
         document.addEventListener('DOMContentLoaded', () => {
 
             // --- DOM Elements ---
@@ -130,7 +153,7 @@
                         currentWordsContainer.appendChild(spaceTile);
                     }
                 });
-                 callLucide();
+                 // No icon rendering needed here
             }
 
             function renderLetterTiles(wordIndex) {
@@ -138,8 +161,7 @@
                 if (!wordTile) return;
 
                 wordTile.innerHTML = '';
-                // Ensure flex layout styles are applied (already done in CSS via .word-tile.selected)
-                // wordTile.classList.add('flex', 'flex-wrap', 'justify-center', 'items-center', 'gap-1', 'p-2');
+                wordTile.classList.add('p-2', 'flex', 'flex-wrap', 'items-center', 'justify-center');
 
                 const word = currentWords[wordIndex];
                 const fragment = document.createDocumentFragment();
@@ -167,7 +189,7 @@
                  }
 
                 wordTile.appendChild(fragment);
-                 callLucide();
+                 // No icon rendering needed here
             }
 
             function createLetterInteractionPoint(wordIndex, precedingLetterIndex) {
@@ -189,26 +211,12 @@
 
                  const checkmark = document.createElement('span');
                  checkmark.classList.add('checkmark-icon');
-                 checkmark.innerHTML = `<i data-lucide="check"></i>`; // Lucide check
+                 checkmark.innerHTML = `<i class="fas fa-check"></i>`; // Font Awesome check
                  element.appendChild(checkmark);
-                 callLucide({ nodes: [checkmark.querySelector('i')] });
+                 // No icon rendering needed here
             }
 
-            function callLucide(options = {}) {
-                // Delay slightly to ensure DOM is ready for Lucide
-                setTimeout(() => {
-                     if (typeof lucide !== 'undefined') {
-                         try {
-                            lucide.createIcons(options);
-                         } catch (error) {
-                             console.error("Lucide error:", error);
-                         }
-                    } else {
-                        // console.error("Lucide library not loaded yet."); // Reduce console noise
-                    }
-                }, 0);
-            }
-
+            // Removed callLucide helper function
 
             function updateUIMode() {
                 wordTwistPanel.classList.add('hidden');
@@ -220,23 +228,13 @@
                 currentWordsContainer.querySelectorAll('.word-tile').forEach((tile, index) => {
                     const isSelected = (index === selectedWordIndex);
                     tile.classList.toggle('selected', isSelected);
-
                     if (isSelected) {
-                        if (!tile.querySelector('.letter-tile')) {
-                            renderLetterTiles(index);
-                        }
+                        renderLetterTiles(index);
                     } else {
-                        // Ensure non-selected tiles show the word correctly
-                        const currentContent = tile.textContent.trim();
-                        const expectedContent = currentWords[index] || '';
-                        // Only update if content is wrong or if it still has letter-tile layout classes
-                        if (currentContent !== expectedContent || tile.classList.contains('flex')) {
-                            tile.innerHTML = ''; // Clear any letter tiles/icons first
-                            tile.textContent = expectedContent;
-                            tile.classList.remove('flex', 'flex-wrap', 'justify-center', 'items-center', 'gap-1', 'p-2'); // Remove layout classes
-                            tile.style.minHeight = ''; // Reset minHeight
-                        }
-                         // Add/remove checkmark as needed
+                         if (!tile.textContent && currentWords[index]) {
+                            tile.textContent = currentWords[index];
+                            tile.classList.remove('p-2', 'flex', 'flex-wrap', 'items-center', 'justify-center');
+                         }
                          if (mandatoryTwistCompleted[index] && !tile.querySelector('.checkmark-icon')) {
                              appendCheckmark(tile);
                          } else if (!mandatoryTwistCompleted[index] && tile.querySelector('.checkmark-icon')) {
@@ -244,7 +242,6 @@
                          }
                     }
                 });
-
 
                 currentWordsContainer.querySelectorAll('.space-tile').forEach(tile => {
                     tile.classList.toggle('selected', parseInt(tile.dataset.index) === selectedSpaceIndex);
@@ -265,20 +262,34 @@
                 } else {
                     screenOverlay.classList.add('hidden');
                 }
-                 callLucide(); // Call after UI updates
+                 // No icon rendering needed here
             }
 
 
-            // Function to render the word history (NYT Style - Just previous turn)
             function renderHistory() {
-                wordHistoryEl.innerHTML = ''; // Clear previous history
-                if (history.length > 0) {
-                    const previousTurnWords = history[history.length - 1]; // Get the most recent history item
+                wordHistoryEl.innerHTML = '';
+                const baseFontSizeRem = 1.125;
+                const fontSizeDecrement = 0.15;
+                const initialOpacity = 0.5;
+                const opacityDecrement = 0.05;
+                const minOpacity = 0.1;
+                const minFontSizeRem = 0.75;
+
+                const reversedHistory = [...history].reverse();
+
+                reversedHistory.forEach((item, index) => {
                     const historyItem = document.createElement('div');
-                    historyItem.classList.add('text-gray-500', 'text-base', 'md:text-lg', 'italic'); // Responsive text size
-                    historyItem.textContent = `Previous: ${previousTurnWords}`;
+                    historyItem.classList.add('history-item');
+                    historyItem.textContent = item;
+
+                    const currentFontSize = Math.max(minFontSizeRem, baseFontSizeRem - (index * fontSizeDecrement));
+                    const currentOpacity = Math.max(minOpacity, initialOpacity - (index * opacityDecrement));
+
+                    historyItem.style.fontSize = `${currentFontSize}rem`;
+                    historyItem.style.opacity = currentOpacity;
+
                     wordHistoryEl.appendChild(historyItem);
-                }
+                });
             }
 
 
@@ -352,8 +363,7 @@
 
             function deselectWord() {
                 if (selectedWordIndex === -1) return;
-                const wordTile = currentWordsContainer.querySelector(`.word-tile[data-index="${selectedWordIndex}"]`);
-                 if(wordTile) wordTile.style.minHeight = ''; // Reset minHeight
+                const oldSelectedWordIndex = selectedWordIndex;
                 selectedWordIndex = -1;
                 wordTwistMode = false;
                 updateUIMode();
@@ -378,17 +388,17 @@
                 logAction(`Opened Word Twist panel for ${currentWords[selectedWordIndex]}`);
                 const wordTile = currentWordsContainer.querySelector(`.word-tile[data-index="${selectedWordIndex}"]`);
                 if(wordTile) {
-                    wordTile.innerHTML = ''; // Clear content
-                    // Ensure flex is removed if present
-                    wordTile.classList.remove('flex', 'flex-wrap', 'justify-center', 'items-center', 'gap-1', 'p-2');
-                    // Set min-height to prevent layout shift while panel is open
-                    wordTile.style.minHeight = '4rem'; // Match .tile min-height (md:min-h-[4rem])
+                    wordTile.innerHTML = '';
+                    wordTile.classList.remove('p-2', 'flex', 'flex-wrap', 'items-center', 'justify-center');
+                    wordTile.style.minHeight = wordTile.offsetHeight + 'px';
                 }
             });
 
             cancelSelectionBtn.addEventListener('click', () => {
                  if (selectedWordIndex === -1) return;
                  logAction(`Cancelled action on word ${currentWords[selectedWordIndex]}`);
+                 const wordTile = currentWordsContainer.querySelector(`.word-tile[data-index="${selectedWordIndex}"]`);
+                 if(wordTile) wordTile.style.minHeight = '';
                  deselectWord();
             });
 
@@ -445,6 +455,8 @@
                          mandatoryTwistCompleted[selectedWordIndex] = true;
                          logAction(`Mandatory twist for ${currentWords[selectedWordIndex]} completed via Word Twist (mock).`);
                      }
+                     const wordTile = currentWordsContainer.querySelector(`.word-tile[data-index="${selectedWordIndex}"]`);
+                     if(wordTile) wordTile.style.minHeight = '';
                      deselectWord();
                  });
              });
@@ -461,6 +473,8 @@
                 if (!isInsideWordTile && !isInsideSpaceTile && !isInsideControls && !isInsideFooterControls) {
                      if (selectedWordIndex !== -1) {
                          logAction("Clicked outside, deselecting word.");
+                         const wordTile = currentWordsContainer.querySelector(`.word-tile[data-index="${selectedWordIndex}"]`);
+                         if(wordTile) wordTile.style.minHeight = '';
                          deselectWord();
                      }
                      if (selectedSpaceIndex !== -1) {
@@ -477,15 +491,15 @@
                 actionLog.innerHTML = `<div>${actionLogEntries[0]}</div>`;
 
                 turnCounterEl.textContent = turnNumber;
-                mandatoryTwistCompleted[0] = true; // Mock twist done
-                renderHistory(); // Render history (now simplified)
-                renderCurrentWords(); // Render current words
+                mandatoryTwistCompleted[0] = true;
+                renderHistory();
+                renderCurrentWords();
 
-                selectedWordIndex = 0; // Auto-select first word
+                selectedWordIndex = 0;
                 logAction(`Selected word: ${currentWords[0]}`);
-                updateUIMode(); // Update UI for selection
+                updateUIMode();
 
-                callLucide(); // Final icon render
+                // No final icon render call needed
             }
 
             // --- Run Initialization ---
